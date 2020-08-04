@@ -1,0 +1,390 @@
+### Release details
+| Number | Date | Name | Note| 
+| ------ | ------ | ------ | ------ |
+| 0.0000 | 2020-08-04 07:20:06 | 04/08/2020 - Release CdS - Discovery | This release was created on 04/08/2020 at 9:19 AM by Gianluca Carroccia. 
+
+<a name="objects"></a>
+# Data Definitions
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="135"></a>
+## OB 1. Attività - Step Intermedi
+##### Description:
+
+<p>la card gli mostra:</p>
+<p>- lo stato dell'attività</p>
+<p>- una breve descrizione</p>
+<p>- un tutorial</p>
+<p>- una CTA per la richiesta di assistenza</p>
+
+##### Object properties:
+
+No object properties
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="139"></a>
+## OB 2. Attività - Step Finale
+##### Description:
+
+<p>la card gli mostra:</p>
+<p>- lo stato dell'attività</p>
+<p>- una breve descrizione</p>
+<p>- un tutorial</p>
+<p>- una CTA per scaricare il software</p>
+
+##### Object properties:
+
+No object properties
+<a name="users"></a>
+# Users
+| # | User | Aliases | Inheritance | Description| 
+| ------ | ------ | ------ | ------ | ------ |
+| 1 | User | None | None | Example user who is not authenticated.| 
+| 2 | Utente non registrato sul CDS | None | None | | 
+| 3 | Utente in possesso di SPID Business | None | None | | 
+| 4 | Utente registrato al CDS | None | None | | 
+
+<a name="flows"></a>
+# User Flows
+## Group 1 Flusso navigazione Catalogo dei Servizi
+### UF 1.1 Richiesta Aiuto - ChatBot
+#### Main
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS  | |
+| | | Displays [IF 25. 0](#155) |   
+| Step 2 | Utente registrato al CDS  | |
+| | | Displays [IF 26. 1](#160) |   
+| Step 3 | Utente registrato al CDS  | |
+| | | Displays [IF 27. 2](#163) |   
+| Step 4 | Utente registrato al CDS  | |
+| | | Displays [IF 29. 3](#172) |   
+| Step 5 | Utente registrato al CDS  | |
+| | | Displays [IF 30. 4](#176) |   
+| Step 6 | Utente registrato al CDS  | |
+| | | Displays [IF 31. 5](#180) |   
+| Step 7 | Utente registrato al CDS  | |
+| | | Displays [IF 32. 6](#184) |   
+| Step 8 | Utente registrato al CDS  | |
+| | | Displays [IF 33. 7](#188) |   
+
+#### Alternate flow A
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS  | |
+| | | Displays [IF 28. 2b](#168) |   
+
+### UF 1.2 Accede al CDS per la prima volta - Registrazione
+#### Main
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente non registrato sul CDS atterra sulla pagina di iscrizione/registrazione del CDS, vede i seguenti contenuti:
+- Accesso tramite SPID Business
+- Inserisci le tue credenziali
+- Registrati
+
+Decide di REGISTRARSI | |
+| | | Displays [IF 1. Accedi](#16) |   
+| Step 2 | Utente non registrato sul CDS inserisce i dati del suo Ente di riferimento "Email Istituzionale" e "Ente per cui lavori o codice Ente".
+
+Può decidere di chiedere assistenza tramite le CTA  "Entra in chat" e "Scrivici" | |
+| | | Displays [IF 2. Dati Professionali](#19) |  
+| | | Applies [BR 1. Form - Campi Bloccati](#22)|  
+| Step 3 | Utente non registrato sul CDS L'utente proseguendo nella compilazione del form deve inserire l'Ente per cui lavora o il relativo codice, digitando sul campo specifico vengono visualizzati gli enti caricati a sistema. A questo punto l'utente ha due possibilità:
+- Selezionare uno degli Enti tra quelli presenti
+- Aggiungere un Ente tramite apposita CTA (qualora non fosse presente a sistema) | |
+| | | Displays [IF 3. Dati Professionali - Selezione Ente](#25) |   
+| Step 4 | Utente non registrato sul CDS inserisce i suoi dati personali e clicca sul pulsante "Procedi" | |
+| | | Displays [IF 6. Dati Personali](#38) |   
+| Step 5 | Utente non registrato sul CDS visualizza le attività | |
+| | | Displays [IF 23. Scegli Attività](#147) |   
+| Step 6 | Utente non registrato sul CDS ha selezionato le attività di suo interesse | |
+| | | Displays [IF 24. scegli attività-1](#151) |   
+| Step 7 | Utente non registrato sul CDS visualizza la schermata dell'avvenuta registrazione | |
+| | System il sistema provvede a mandare una mail di avvenuta registrazione con relativo link che permetterà all'utente di accedere alla sua personale "Welcome page" | |
+| | | Displays [IF 21. Mail di Verifica](#127) |   
+| Step 8 | Utente non registrato sul CDS visualizza la Welcome Page | |
+| | System questa pagina rimane attiva fino a quando l'utente non ha ricevuto la conferma tramite mail dell'avvenuta abilitazione alle attività da lui selezionate in fase di registrazione. | |
+| | | Displays [IF 7. Welcome Page](#43) |   
+
+#### Alternate flow A
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente non registrato sul CDS compila i campi del suo ente di riferimento | |
+| | System si apre una modale con i campi di inserimento relativa ai dati del proprio Ente | |
+| | | Displays [IF 4. Modale - Inserimento Dati Ente](#30) |   
+| Step 2 | Utente non registrato sul CDS visualizza il contenuto di pagina, prende atto che la sua richiesta di attivazione Ente richiederà circa 2 giorni.
+
+L'utente può "Chiudere la pagina" o "Tornare alla Log In"
+Da questo momento dovrà attendere una mail con l'avvenuta registrazione del suo Ente, in modo così da poter completare la registrazione. | |
+| | | Displays [IF 5. mail verifica ente](#34) |   
+
+### UF 1.3 Accede al CDS per la prima volta - Registrazione con Codice SPID Business
+#### Main
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente in possesso di SPID Business atterra sulla pagina di iscrizione/registrazione del CDS, vede i seguenti contenuti:
+- Accesso tramite SPID Business
+- Inserisci le tue credenziali
+- Registrati
+
+Decide di registrarsi con l'identità digitale business (SPID) | |
+| | | Displays [IF 8. Accedi](#49) |   
+| Step 2 | Utente in possesso di SPID Business visualizza un form da cui può selezionare le attività che vuole abilitare, può filtrare le attività tramite la selezione dei servizi relativi e scegliere le attività tramite checkbox. Una volta completati i passaggi l'utente può richiedere la registrazione dalla relativa CTA.
+ | |
+| | System il sistema grazie ai dati del codice SPID mostra una prima profilazione dell'utente selezionando le attività in linea con la sua figura | |
+| | | Displays [IF 22. scegli attività](#141) |   
+| Step 3 | Utente in possesso di SPID Business visualizza la schermata dell'avvenuta registrazione | |
+| | System il sistema provvede a mandare una mail di avvenuta registrazione con relativo link che permetterà all'utente di accedere alla sua personale "Welcome page" | |
+| | | Displays [IF 21. Mail di Verifica](#127) |   
+| Step 4 | User visualizza la Welcome Page | |
+| | System questa pagina rimane attiva fino a quando l'utente non ha ricevuto la conferma tramite mail dell'avvenuta abilitazione alle attività da lui selezionate in fase di registrazione.  | |
+| | | Displays [IF 9. Welcome page](#60) |   
+
+### UF 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+#### Main
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS ha ricevuto una mail di conferma dell'avvenuta registrazione del suo account e dell'avvenuta abilitazione delle attività da lui seleziona in fase di registrazione, cliccando sul link di riferimento nella mail viene riportato alla Log In per accedere al CDS
+
+Può accedere a seconda dei casi con la "Log In" o tramite "Codice SPID Business", il successivo Step rimane invariato | |
+| | | Displays [IF 1. Accedi](#16) |   
+| Step 2 | Utente registrato al CDS visualizza la pagina "My Area" del CDS
+Può decidere di:
+- interagire con i contenuti di pagina
+- vedere le notifiche
+- selezionare una delle voci del menu laterale | |
+| | System la schermata mostra:
+- una header con barra di ricerca, dettaglio profilo e le notifiche
+- le varie voci dell'area personale nel menu laterale
+- il contenuto di pagina (in questo caso la "My Area")
+
+ | |
+| | | Displays [IF 10. My Area](#70) |   
+| Step 4 | Utente registrato al CDS ha scelto di cliccare sul pulsante "+" della card relativa all'attività "certificazione del credito", così facendo può vedere il dettaglio delle informazioni relative agli step dell'attività. | |
+| | System La card mostra il dettaglio delle operazioni relative alla specifica attività, mostrando una sequenza di step | |
+| | | Applies [BR 2. Card Attività - Dettaglio](#116)| 
+| | | Displays [IF 19. Card Attività - Step 03](#118) |  
+| | | Creates [OB 2. Attività - Step Finale](#139)|  
+| Step 5 | Utente registrato al CDS cliccando sulla seconda voce degli step visualizza il relativo contenuto | |
+| | System   | |
+| | | Displays [IF 16. Card Attività - Step 02](#104) |  
+| | | Creates [OB 1. Attività - Step Intermedi](#135)|  
+| Step 6 | Utente registrato al CDS l'utente decide di vedere anche il primo step dell'attività selezionando la rispettiva voce | |
+| | System la card gli mostra lo stato dell'attività, una breve descrizione, un tutorial e una CTA per la richiesta di assistenza | |
+| | | Displays [IF 20. Card Attività - Step 01](#121) |  
+| | | Creates [OB 1. Attività - Step Intermedi](#135)|  
+
+#### Alternate flow A
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS visualizza una dashboard dedicata alla gestione e al monitoraggio delle proprie attività.
+Può decidere di interagire con l'ordinamento o la creazione di nuovi contenuti o di poter visualizzare il dettaglio di un Task | |
+| | | Displays [IF 17. Task Manager](#110) |   
+| Step 2 | Utente registrato al CDS visualizza il dettaglio del Task
+- etichetta dello stato del Task (possibilità di editing)
+- descrizione del Task
+- storico delle modifiche apportate al Task sia lato utente che da sistema
+- promemoria sul calendar
+- etichette associate e la possibilità di aggiungerne altre
+ | |
+| | System si apre una modale sopra la pagina che mostra il contenuto del Task selezionato | |
+| | | Displays [IF 18. Modal Task](#113) |   
+
+#### Alternate flow B
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS visualizza la pagina delle sue attività | |
+| | | Displays [IF 12. Le tue Attività](#87) |   
+
+#### Alternate flow C
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS visualizza la pagina con l'elenco dei documenti caricati dal sistema | |
+| | | Displays [IF 13. Documenti e Link utili](#90) |   
+
+#### Alternate flow D
+| | | |
+| ------ | ------ | ------ |
+| Step 1 | Utente registrato al CDS visualizza le notifiche relative ai contenuti della sua Area Personale: stato attività, documentazioni, ecc. | |
+| | | Displays [IF 15. PopUp Notifiche](#98) |   
+
+<a name="rules"></a>
+
+# Rules
+<a name="22"></a>
+## BR 1. Form - Campi Bloccati
+##### Definition:
+I seguenti campi rimangono bloccati fino a quando non vengono compilati gli altri campi del form, requisito fondamentale per andare avanti nell'inserimento dei campi
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="116"></a>
+## BR 2. Card Attività - Dettaglio
+##### Definition:
+Cliccando sul pulsante "+" di una card si può visualizzare il contenuto nel dettaglio dell'attività. Quest'ultimo corrisponde a una serie di Step, in numero e funzione di volta in volta diversi a seconda del Task di riferimento
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="forms"></a>
+# Forms
+There are no Forms defined for this project.
+<a name="ifaces"></a>
+# Wireframes
+<a name="16"></a>
+## IF 1. Accedi
+![IF 1. Accedi](https://www.primary.app/app/release/getImage/image/4485_5f23ed34457941.33225473.png/ext/5f290c262514a "Accedi")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="19"></a>
+## IF 2. Dati Professionali
+![IF 2. Dati Professionali](https://www.primary.app/app/release/getImage/image/4485_5f23ef6d9ab158.70672949.png/ext/5f290c262514a "Dati Professionali")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="25"></a>
+## IF 3. Dati Professionali - Selezione Ente
+![IF 3. Dati Professionali - Selezione Ente](https://www.primary.app/app/release/getImage/image/4485_5f23f13baa53d0.01184555.png/ext/5f290c262514a "Dati Professionali - Selezione Ente")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="30"></a>
+## IF 4. Modale - Inserimento Dati Ente
+![IF 4. Modale - Inserimento Dati Ente](https://www.primary.app/app/release/getImage/image/4485_5f23f4f88b3cb2.90112289.png/ext/5f290c262514a "Modale - Inserimento Dati Ente")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="34"></a>
+## IF 5. mail verifica ente
+![IF 5. mail verifica ente](https://www.primary.app/app/release/getImage/image/4485_5f23f53457a830.25486923.png/ext/5f290c262514a "mail verifica ente")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="38"></a>
+## IF 6. Dati Personali
+![IF 6. Dati Personali](https://www.primary.app/app/release/getImage/image/4485_5f23f6856003f6.91882836.png/ext/5f290c262514a "Dati Personali")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="43"></a>
+## IF 7. Welcome Page
+![IF 7. Welcome Page](https://www.primary.app/app/release/getImage/image/4485_5f23f6e8e095d4.88896748.png/ext/5f290c262514a "Welcome Page")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="49"></a>
+## IF 8. Accedi
+![IF 8. Accedi](https://www.primary.app/app/release/getImage/image/4485_5f23f7846db742.40989897.png/ext/5f290c262514a "Accedi")
+
+Used: 1.3 Accede al CDS per la prima volta - Registrazione con Codice SPID Business
+<a name="60"></a>
+## IF 9. Welcome page
+![IF 9. Welcome page](https://www.primary.app/app/release/getImage/image/4485_5f23f92a585d80.98198521.png/ext/5f290c262514a "Welcome page")
+
+Used: 1.3 Accede al CDS per la prima volta - Registrazione con Codice SPID Business
+<a name="70"></a>
+## IF 10. My Area
+![IF 10. My Area](https://www.primary.app/app/release/getImage/image/4485_5f23f9e3e3c569.63342941.png/ext/5f290c262514a "My Area")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="87"></a>
+## IF 12. Le tue Attività
+![IF 12. Le tue Attività](https://www.primary.app/app/release/getImage/image/4485_5f23fb332b44b8.98402360.png/ext/5f290c262514a "Le tue Attività")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="90"></a>
+## IF 13. Documenti e Link utili
+![IF 13. Documenti e Link utili](https://www.primary.app/app/release/getImage/image/4485_5f23fb3bca1a15.18309086.png/ext/5f290c262514a "Documenti e Link utili")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="98"></a>
+## IF 15. PopUp Notifiche
+![IF 15. PopUp Notifiche](https://www.primary.app/app/release/getImage/image/4485_5f23fb73968ca2.37049646.png/ext/5f290c262514a "PopUp Notifiche")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="104"></a>
+## IF 16. Card Attività - Step 02
+![IF 16. Card Attività - Step 02](https://www.primary.app/app/release/getImage/image/4485_5f23fba3429b12.24952725.png/ext/5f290c262514a "Card Attività - Step 02")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="110"></a>
+## IF 17. Task Manager
+![IF 17. Task Manager](https://www.primary.app/app/release/getImage/image/4485_5f23fbc250f989.01830026.png/ext/5f290c262514a "Task Manager")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="113"></a>
+## IF 18. Modal Task
+![IF 18. Modal Task](https://www.primary.app/app/release/getImage/image/4485_5f23fbcb184f15.08905717.png/ext/5f290c262514a "Modal Task")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="118"></a>
+## IF 19. Card Attività - Step 03
+![IF 19. Card Attività - Step 03](https://www.primary.app/app/release/getImage/image/4485_5f240cff8c2be0.09185124.png/ext/5f290c262514a "Card Attività - Step 03")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="121"></a>
+## IF 20. Card Attività - Step 01
+![IF 20. Card Attività - Step 01](https://www.primary.app/app/release/getImage/image/4485_5f240d9a5d7a45.91468589.png/ext/5f290c262514a "Card Attività - Step 01")
+
+Used: 1.4 Accesso all'Area Personale - Utente Registrato (standard o con SPID) con attività abilitate
+<a name="127"></a>
+## IF 21. Mail di Verifica
+![IF 21. Mail di Verifica](https://www.primary.app/app/release/getImage/image/4485_5f241b8f4aea35.76554864.png/ext/5f290c262514a "Mail di Verifica")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+
+Used: 1.3 Accede al CDS per la prima volta - Registrazione con Codice SPID Business
+<a name="141"></a>
+## IF 22. scegli attività
+![IF 22. scegli attività](https://www.primary.app/app/release/getImage/image/4485_5f242a7e728a88.39901818.jpg/ext/5f290c262514a "scegli attività")
+
+Used: 1.3 Accede al CDS per la prima volta - Registrazione con Codice SPID Business
+<a name="147"></a>
+## IF 23. Scegli Attività
+![IF 23. Scegli Attività](https://www.primary.app/app/release/getImage/image/4485_5f283011daddf4.89542597.png/ext/5f290c262514a "Scegli Attività")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="151"></a>
+## IF 24. scegli attività-1
+![IF 24. scegli attività-1](https://www.primary.app/app/release/getImage/image/4485_5f28305ad28180.68455477.png/ext/5f290c262514a "scegli attività-1")
+
+Used: 1.2 Accede al CDS per la prima volta - Registrazione
+<a name="155"></a>
+## IF 25. 0
+![IF 25. 0](https://www.primary.app/app/release/getImage/image/4485_5f29094e5c4c67.31567489.png/ext/5f290c262514a "0")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="160"></a>
+## IF 26. 1
+![IF 26. 1](https://www.primary.app/app/release/getImage/image/4485_5f2909f63fa6a1.51492110.png/ext/5f290c262514a "1")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="163"></a>
+## IF 27. 2
+![IF 27. 2](https://www.primary.app/app/release/getImage/image/4485_5f290a4e4b1900.19145974.png/ext/5f290c262514a "2")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="168"></a>
+## IF 28. 2b
+![IF 28. 2b](https://www.primary.app/app/release/getImage/image/4485_5f290a953d19e6.53924488.png/ext/5f290c262514a "2b")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="172"></a>
+## IF 29. 3
+![IF 29. 3](https://www.primary.app/app/release/getImage/image/4485_5f290b83428405.48594803.png/ext/5f290c262514a "3")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="176"></a>
+## IF 30. 4
+![IF 30. 4](https://www.primary.app/app/release/getImage/image/4485_5f290b9b688087.68812654.png/ext/5f290c262514a "4")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="180"></a>
+## IF 31. 5
+![IF 31. 5](https://www.primary.app/app/release/getImage/image/4485_5f290bb762e100.86731099.png/ext/5f290c262514a "5")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="184"></a>
+## IF 32. 6
+![IF 32. 6](https://www.primary.app/app/release/getImage/image/4485_5f290bd9a8b4d2.24456836.png/ext/5f290c262514a "6")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
+<a name="188"></a>
+## IF 33. 7
+![IF 33. 7](https://www.primary.app/app/release/getImage/image/4485_5f290be80e1102.07638944.png/ext/5f290c262514a "7")
+
+Used: 1.1 Richiesta Aiuto - ChatBot
